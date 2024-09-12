@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Health Connect - Interfaces</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="logo.png" alt="E-Health Connect Logo" class="logo">
+        <h1>E-Health Connect</h1>
+        <nav>
+            <button onclick="showPatientInterface()">Patient Interface</button>
+            <button onclick="showDoctorInterface()">Doctor Interface</button>
+        </nav>
+    </header>
+    
+    <main id="main-content">
+        <!-- Patient Interface -->
+        <div id="patient-interface" class="interface">
+            <h2>Patient Dashboard</h2>
+            <section class="overview">
+                <div class="widget">
+                    <h3>Upcoming Appointments</h3>
+                    <img src="appointment-icon.png" alt="Appointments" class="widget-icon">
+                    <ul>
+                        <li>Dr. Avinash - September 20, 2024 at 10:00 AM</li>
+                        <li>Dr. Dhanushree - October 5, 2024 at 2:00 PM</li>
+                    </ul>
+                    <button class="btn">View All Appointments</button>
+                </div>
+                <div class="widget">
+                    <h3>Medication Reminders</h3>
+                    <img src="medication-icon.png" alt="Medication" class="widget-icon">
+                    <ul>
+                        <li>Take Aspirin - 8:00 AM (one pill)</li>
+                        <li>Take Metformin - 8:00 PM (two pills)</li>
+                    </ul>
+                    <button class="btn">Add Reminder</button>
+                </div>
+                <div class="widget">
+                    <h3>Recent Medical Records</h3>
+                    <img src="records-icon.png" alt="Records" class="widget-icon">
+                    <ul>
+                        <li>Blood Test - September 10, 2024</li>
+                        <li>Chest X-Ray - August 25, 2024</li>
+                    </ul>
+                    <button class="btn">View All Records</button>
+                </div>
+            </section>
+            <section class="notifications">
+                <div class="widget">
+                    <h3>Recent Notifications</h3>
+                    <img src="notifications-icon.png" alt="Notifications" class="widget-icon">
+                    <ul>
+                        <li>New message from Dr. Smith</li>
+                        <li>Reminder: Upcoming appointment</li>
+                    </ul>
+                    <button class="btn">View All Notifications</button>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Doctor Interface -->
+        <div id="doctor-interface" class="interface" style="display: none;">
+            <h2>Doctor Dashboard</h2>
+            <section class="overview">
+                <div class="widget">
+                    <h3>Today's Appointments</h3>
+                    <img src="appointments-icon.png" alt="Today's Appointments" class="widget-icon">
+                    <ul>
+                        <li>Mr Akshy - 9:00 AM</li>
+                        <li>Ms Abirami - 10:30 AM</li>
+                    </ul>
+                    <button class="btn">View All Appointments</button>
+                </div>
+                <div class="widget">
+                    <h3>Patient Messages</h3>
+                    <img src="messages-icon.png" alt="Patient Messages" class="widget-icon">
+                    <ul>
+                        <li>Message from John Doe</li>
+                        <li>Message from Jane Smith</li>
+                    </ul>
+                    <button class="btn">View All Messages</button>
+                </div>
+                <div class="widget">
+                    <h3>Recent Patient Records</h3>
+                    <img src="records-icon.png" alt="Patient Records" class="widget-icon">
+                    <ul>
+                        <li>ms. Ashwini - Blood Test Results</li>
+                        <li>mrs. Deepika - X-Ray Report</li>
+                    </ul>
+                    <button class="btn">View All Records</button>
+                </div>
+            </section>
+            <section class="analytics">
+                <div class="widget">
+                    <h3>Analytics Dashboard</h3>
+                    <img src="analytics-icon.png" alt="Analytics Dashboard" class="widget-icon">
+                    <p>Overview of patient data and clinic performance.</p>
+                    <button class="btn">View Analytics</button>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <script src="script.js"></script>
+</body>
+</html>

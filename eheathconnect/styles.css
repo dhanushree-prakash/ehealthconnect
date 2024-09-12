@@ -1,0 +1,172 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f0f2f5;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+header .logo {
+    width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto 1rem;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+nav {
+    margin-top: 1rem;
+}
+
+nav button {
+    background: #0056b3;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 2rem;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+nav button:hover {
+    background: #003d80;
+    transform: scale(1.05);
+}
+
+/* Main Content */
+main {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.interface {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 1200px;
+    margin: 1rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.interface:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.widget {
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.widget h3 {
+    margin-top: 0;
+    color: #007BFF;
+}
+
+.widget .widget-icon {
+    width: 50px;
+    height: 50px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+.widget ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.widget ul li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+    transition: background 0.3s;
+}
+
+.widget ul li:hover {
+    background: #f1f1f1;
+}
+
+.widget ul li:last-child {
+    border-bottom: none;
+}
+
+.btn {
+    display: inline-block;
+    background: #28a745;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    margin-top: 0.5rem;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.btn:hover {
+    background: #218838;
+    transform: scale(1.05);
+}
+
+.btn:active {
+    background: #1e7e34;
+    transform: scale(1);
+}
+
+@media (max-width: 768px) {
+    nav button {
+        display: block;
+        margin: 0.5rem auto;
+        width: 100%;
+    }
+
+    .widget {
+        padding: 1rem;
+    }
+
+    .btn {
+        padding: 0.5rem;
+        font-size: 12px;
+    }
+}
+
+/* Additional Enhancements */
+.overview, .notifications, .analytics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.widget {
+    flex: 1;
+    min-width: 250px;
+}
+
