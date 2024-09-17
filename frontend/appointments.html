@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f3f4f6, #eef2f7);
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #4a90e2;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .back-btn {
+            background-color: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .back-btn i {
+            margin-right: 8px;
+        }
+
+        /* Section Styles */
+        .main-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(74, 144, 226, 0.15);
+            border-radius: 50%;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-10px);
+        }
+
+        .section:hover::before {
+            transform: scale(1.2);
+        }
+
+        .section h2 {
+            color: #4a90e2;
+            margin-bottom: 20px;
+            font-weight: 600;
+            z-index: 2;
+            position: relative;
+        }
+
+        .appointments-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .appointments-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .appointments-list li:last-child {
+            border-bottom: none;
+        }
+
+        .appointments-list li i {
+            color: #4a90e2;
+            margin-right: 12px;
+            font-size: 22px;
+        }
+
+        /* Add Button */
+        .add-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease, transform 0.3s ease;
+            z-index: 2;
+            position: relative;
+        }
+
+        .add-btn i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .add-btn:hover {
+            background: linear-gradient(135deg, #218838, #1ea080);
+            transform: translateY(-5px);
+        }
+
+        /* Dialog */
+        .dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .dialog-content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            position: relative;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 22px;
+            color: #333;
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .save-btn:hover {
+            background: linear-gradient(135deg, #357abd, #2e6695);
+            transform: translateY(-5px);
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 600px) {
+            .content {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            .add-btn, .save-btn {
+                padding: 12px 25px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <header>
+            <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+            <h1>Appointments <i class="fas fa-calendar-alt"></i></h1>
+        </header>
+        
+        <div class="main-sections">
+            <!-- Recent Appointments Section -->
+            <div class="section recent-appointments">
+                <h2>Recent Appointments <i class="fas fa-history"></i></h2>
+                <ul class="appointments-list">
+                    <li><i class="fas fa-user-md"></i> Dr. A Sharma - 2024-09-10 at 10:00 AM</li>
+                    <li><i class="fas fa-user-md"></i> Dr. S Patel - 2024-09-09 at 12:30 PM</li>
+                    <li><i class="fas fa-user-md"></i> Dr. R Gupta - 2024-09-08 at 02:00 PM</li>
+                </ul>
+            </div>
+
+            <!-- Upcoming Appointments Section -->
+            <div class="section upcoming-appointments">
+                <h2>Upcoming Appointments <i class="fas fa-calendar-check"></i></h2>
+                <ul class="appointments-list" id="appointments-list">
+                    <li><i class="fas fa-user-md"></i> Dr. N Mehta - 2024-09-18 at 03:00 PM</li>
+                    <li><i class="fas fa-user-md"></i> Dr. P Kumar - 2024-09-20 at 11:00 AM</li>
+                    <li><i class="fas fa-user-md"></i> Dr. K Singh - 2024-09-22 at 04:30 PM</li>
+                </ul>
+                <button class="add-btn" onclick="openDialog('appointment-dialog')"><i class="fas fa-plus-circle"></i> Add Appointment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appointment Dialog -->
+    <div id="appointment-dialog" class="dialog">
+        <div class="dialog-content">
+            <span class="close-btn" onclick="closeDialog('appointment-dialog')">&times;</span>
+            <h3>Add New Appointment</h3>
+            <form id="appointment-form">
+                <label for="appointment-date">Date:</label>
+                <input type="date" id="appointment-date" required>
+                
+                <label for="appointment-time">Time:</label>
+                <input type="time" id="appointment-time" required>
+                
+                <label for="appointment-desc">Description:</label>
+                <textarea id="appointment-desc" rows="4" required></textarea>
+                
+                <button type="submit" class="save-btn">Save Appointment</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Function to open the dialog
+        function openDialog(dialogId) {
+            document.getElementById(dialogId).style.display = 'flex';
+        }
+
+        // Function to close the dialog
+        function closeDialog(dialogId) {
+            document.getElementById(dialogId).style.display = 'none';
+        }
+
+        // Function to handle the back button
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

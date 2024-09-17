@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step Counter</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffebee, #fbe9e7);
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #d32f2f;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .back-btn {
+            background-color: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .back-btn i {
+            margin-right: 8px;
+        }
+
+        /* Section Styles */
+        .main-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .section::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 87, 34, 0.15);
+            border-radius: 50%;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-10px);
+        }
+
+        .section:hover::before {
+            transform: scale(1.2);
+        }
+
+        .section h2 {
+            color: #d32f2f;
+            margin-bottom: 20px;
+            font-weight: 600;
+            z-index: 2;
+            position: relative;
+        }
+
+        .charts-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .chart {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+        }
+
+        .update-btn {
+            background: linear-gradient(135deg, #c62828, #a80000);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease, transform 0.3s ease;
+            z-index: 2;
+            position: relative;
+        }
+
+        .update-btn i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .update-btn:hover {
+            background: linear-gradient(135deg, #a80000, #800000);
+            transform: translateY(-5px);
+        }
+
+        /* Goals Section */
+        .goals-section {
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .goals-section h3 {
+            color: #c62828;
+            font-weight: 600;
+        }
+
+        .goals-section input {
+            width: 100px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .goals-section button {
+            background: linear-gradient(135deg, #c62828, #a80000);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .goals-section button:hover {
+            background: linear-gradient(135deg, #a80000, #800000);
+            transform: translateY(-3px);
+        }
+
+        /* Popup Styles */
+        .dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .dialog-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .dialog-content h3 {
+            margin-top: 0;
+            color: #d32f2f;
+        }
+
+        .dialog-content label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        .dialog-content input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .dialog-content .save-btn {
+            background: linear-gradient(135deg, #c62828, #a80000);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .dialog-content .save-btn:hover {
+            background: linear-gradient(135deg, #a80000, #800000);
+            transform: translateY(-3px);
+        }
+
+        .dialog-content .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #d32f2f;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 600px) {
+            .content {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            .update-btn {
+                padding: 12px 25px;
+                font-size: 14px;
+            }
+
+            .charts-container {
+                flex-direction: column;
+            }
+
+            .chart {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <header>
+            <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+            <h1>Step Counter <i class="fas fa-walking"></i></h1>
+        </header>
+
+        <div class="main-sections">
+            <div class="section step-counter">
+                <h2>Step Counter <i class="fas fa-walking"></i></h2>
+                <div class="charts-container">
+                    <div class="steps-progress chart">
+                        <canvas id="stepsChart"></canvas>
+                    </div>
+                    <div class="daily-steps chart">
+                        <canvas id="dailyStepsChart"></canvas>
+                    </div>
+                </div>
+                <div class="goals-section">
+                    <h3>Set Your Daily Goal</h3>
+                    <input type="number" id="goal-steps" placeholder="Goal (steps)" required>
+                    <button onclick="setGoal()">Set Goal</button>
+                </div>
+                <button class="update-btn" onclick="openDialog('steps-dialog')">
+                    <i class="fas fa-plus"></i> Add Steps
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Steps Dialog -->
+    <div id="steps-dialog" class="dialog">
+        <div class="dialog-content">
+            <span class="close-btn" onclick="closeDialog('steps-dialog')">&times;</span>
+            <h3>Add Steps</h3>
+            <label for="steps-amount">Steps:</label>
+            <input type="number" id="steps-amount" placeholder="Number of steps">
+            <label for="steps-time">Time:</label>
+            <input type="datetime-local" id="steps-time">
+            <button class="save-btn" onclick="updateSteps()">Save</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function setDefaultValues() {
+            if (!localStorage.getItem('stepsData')) {
+                localStorage.setItem('stepsData', JSON.stringify({ steps: 5000 }));
+            }
+
+            if (!localStorage.getItem('dailyStepsData')) {
+                localStorage.setItem('dailyStepsData', JSON.stringify({
+                    labels: ['2024-09-14', '2024-09-15', '2024-09-16'],
+                    data: [5000, 6000, 5500]
+                }));
+            }
+
+            if (!localStorage.getItem('dailyGoal')) {
+                localStorage.setItem('dailyGoal', 10000);
+            }
+        }
+
+        function initCharts() {
+            setDefaultValues(); // Ensure default values are set
+
+            const stepsData = JSON.parse(localStorage.getItem('stepsData'));
+            const dailyStepsData = JSON.parse(localStorage.getItem('dailyStepsData'));
+
+            // Steps Progress Chart
+            new Chart('stepsChart', {
+                type: 'doughnut',
+                data: {
+                    labels: ['Steps Taken', 'Remaining Steps'],
+                    datasets: [{
+                        data: [stepsData.steps, localStorage.getItem('dailyGoal') - stepsData.steps],
+                        backgroundColor: ['#4caf50', '#e0e0e0'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    let label = tooltipItem.label || '';
+                                    if (label) {
+                                        label += ': ' + tooltipItem.raw + ' steps';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Daily Steps Chart
+            new Chart('dailyStepsChart', {
+                type: 'line',
+                data: {
+                    labels: dailyStepsData.labels.map(date => new Date(date).toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short' })),
+                    datasets: [{
+                        label: 'Daily Steps',
+                        data: dailyStepsData.data,
+                        borderColor: '#4caf50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                        fill: true,
+                        borderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Steps'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return tooltipItem.dataset.label + ': ' + tooltipItem.raw + ' steps';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function openDialog(dialogId) {
+            document.getElementById(dialogId).style.display = 'flex';
+        }
+
+        function closeDialog(dialogId) {
+            document.getElementById(dialogId).style.display = 'none';
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function updateSteps() {
+            const amount = document.getElementById('steps-amount').value;
+            const time = new Date(document.getElementById('steps-time').value);
+
+            if (amount && time) {
+                // Update the steps chart
+                const stepsChart = Chart.getChart('stepsChart');
+                const stepsData = JSON.parse(localStorage.getItem('stepsData'));
+                const steps = stepsData.steps + parseFloat(amount);
+                const remaining = localStorage.getItem('dailyGoal') - steps;
+                stepsChart.data.datasets[0].data = [steps, remaining];
+                stepsChart.update();
+
+                // Update daily steps data
+                const dailyStepsData = JSON.parse(localStorage.getItem('dailyStepsData')) || {
+                    labels: [],
+                    data: []
+                };
+                const today = new Date().toISOString().split('T')[0];
+                if (!dailyStepsData.labels.includes(today)) {
+                    dailyStepsData.labels.push(today);
+                    dailyStepsData.data.push(parseFloat(amount));
+                } else {
+                    const index = dailyStepsData.labels.indexOf(today);
+                    dailyStepsData.data[index] += parseFloat(amount);
+                }
+
+                // Save daily steps data
+                localStorage.setItem('dailyStepsData', JSON.stringify(dailyStepsData));
+
+                // Update daily steps chart
+                const dailyStepsChart = Chart.getChart('dailyStepsChart');
+                dailyStepsChart.data.labels = dailyStepsData.labels.map(date => new Date(date).toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short' }));
+                dailyStepsChart.data.datasets[0].data = dailyStepsData.data;
+                dailyStepsChart.update();
+
+                // Save the data to localStorage
+                localStorage.setItem('stepsData', JSON.stringify({ steps }));
+
+                // Clear the form fields
+                document.getElementById('steps-form').reset();
+                closeDialog('steps-dialog');
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+
+        function setGoal() {
+            const goalAmount = parseFloat(document.getElementById('goal-steps').value);
+            if (goalAmount) {
+                localStorage.setItem('dailyGoal', goalAmount);
+                alert('Daily goal set to ' + goalAmount + ' steps.');
+            } else {
+                alert('Please enter a valid goal amount.');
+            }
+        }
+
+        window.onload = initCharts;
+    </script>
+</body>
+</html>

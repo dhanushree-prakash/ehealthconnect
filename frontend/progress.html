@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Progress</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #004d40;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-size: 2rem;
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin-top: 20px;
+        }
+
+        .progress-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .progress-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #004d40;
+            margin-bottom: 20px;
+        }
+
+        .chart-wrapper {
+            background: #e0f2f1;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .activity-section {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .activity-box {
+            background: linear-gradient(135deg, #e0f2f1, #b2dfdb);
+            padding: 20px;
+            border-radius: 12px;
+            width: 30%;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .activity-box:hover {
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+        }
+
+        .activity-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #004d40;
+            margin-bottom: 10px;
+        }
+
+        .activity-text {
+            font-size: 1rem;
+            color: #00796b;
+            margin-bottom: 10px;
+        }
+
+        .time-input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #b2dfdb;
+            width: 80%;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .save-time-btn {
+            background-color: #004d40;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .save-time-btn:hover {
+            background-color: #00796b;
+        }
+
+        /* Back Button */
+        .back-btn {
+            background-color: #00796b;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #004d40;
+        }
+
+        /* Dropdown for selecting activities */
+        .activity-select {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #b2dfdb;
+            border-radius: 8px;
+            width: 80%;
+            text-align: center;
+            background-color: white;
+        }
+
+        /* Slider for healthy reminders */
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .reminder {
+            background: #b2dfdb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-right: 20px;
+            color: #004d40;
+            flex: 0 0 100%;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Navigation Buttons for Slider */
+        .nav-btn {
+            background-color: #004d40;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #00796b;
+        }
+
+        .prev-btn {
+            left: 10px;
+        }
+
+        .next-btn {
+            right: 10px;
+        }
+
+        /* Responsive Styles */
+        @media screen and (max-width: 768px) {
+            .activity-box {
+                width: 45%;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .activity-box {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        Health Progress
+    </header>
+
+    <div class="container">
+        <!-- Back Button -->
+        <button class="back-btn" onclick="goBack()">⬅ Back</button>
+
+        <!-- Health Progress Graph -->
+        <div class="progress-section">
+            <div class="progress-title">Your Health Progress Overview</div>
+            <div class="chart-wrapper">
+                <canvas id="progressChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Activities Section with Time Input and Activity Selection -->
+        <div class="progress-section">
+            <div class="progress-title">Activities & Time Tracking</div>
+            <div class="activity-section">
+                <div class="activity-box">
+                    <div class="activity-title">Choose Activity</div>
+                    <select class="activity-select" id="activitySelect">
+                        <option value="Yoga">Yoga</option>
+                        <option value="Aerobics">Aerobics</option>
+                        <option value="Meditation">Meditation</option>
+                        <option value="Running">Running</option>
+                        <option value="Swimming">Swimming</option>
+                        <option value="Cycling">Cycling</option>
+                        <option value="Others">Others</option>
+                    </select>
+                    <input type="text" class="time-input" id="otherActivityName" placeholder="Enter activity name (if Others)">
+                    <input type="number" class="time-input" id="activityTime" placeholder="Enter time (mins)">
+                    <button class="save-time-btn" onclick="saveTime()">Save Time</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Healthy Reminders Slider -->
+        <div class="progress-section">
+            <div class="progress-title">Healthy Reminders</div>
+            <div class="slider-wrapper">
+                <div class="slider-container" id="sliderContainer">
+                    <div class="reminder">Drink at least 8 glasses of water daily.</div>
+                    <div class="reminder">Do 30 minutes of physical activity every day.</div>
+                    <div class="reminder">Have a balanced diet rich in fruits and vegetables.</div>
+                    <div class="reminder">Get 7-9 hours of sleep each night.</div>
+                    <div class="reminder">Schedule regular checkups with your healthcare provider.</div>
+                    <!-- More reminders can be added here -->
+                </div>
+                <button class="nav-btn prev-btn" onclick="prevSlide()">&#10094;</button>
+                <button class="nav-btn next-btn" onclick="nextSlide()">&#10095;</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Initialize Chart.js
+        const ctx = document.getElementById('progressChart').getContext('2d');
+
+        const gradientFill = ctx.createLinearGradient(0, 0, 0, 400);
+        gradientFill.addColorStop(0, 'rgba(38,198,218,0.2)');
+        gradientFill.addColorStop(1, 'rgba(38,198,218,0)');
+
+        const progressChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Yoga', 'Aerobics', 'Meditation', 'Running', 'Swimming', 'Cycling'],
+                datasets: [{
+                    label: 'Minutes Spent',
+                    data: [50, 60, 40, 70, 90, 30], // Sample data
+                    backgroundColor: gradientFill,
+                    borderColor: '#26c6da',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#26c6da',
+                    pointRadius: 6,
+                    pointHoverRadius: 8,
+                    fill: true
+                }]
+            },
+            options: {
+                plugins: {
+                    tooltip: {
+                        backgroundColor: '#004d40',
+                        titleColor: '#fff',
+                        bodyColor: '#fff',
+                        borderColor: '#004d40',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#e0f2f1'
+                        },
+                        ticks: {
+                            color: '#004d40'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: '#e0f2f1'
+                        },
+                        ticks: {
+                            color: '#004d40'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Slider functionality
+        let slideIndex = 0;
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.reminder');
+            if (index >= slides.length) slideIndex = 0;
+            if (index < 0) slideIndex = slides.length - 1;
+            document.getElementById('sliderContainer').style.transform = `translateX(-${slideIndex * 100}%)`;
+        }
+
+        function nextSlide() {
+            slideIndex++;
+            showSlide(slideIndex);
+        }
+
+        function prevSlide() {
+            slideIndex--;
+            showSlide(slideIndex);
+        }
+
+        // Automatic sliding every 3 seconds
+        setInterval(nextSlide, 3000);
+
+        // Show the first slide initially
+        showSlide(slideIndex);
+
+        // Go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+
+        // Save Time Function for Activities
+        function saveTime() {
+            const selectedActivity = document.getElementById('activitySelect').value;
+            const timeSpent = document.getElementById('activityTime').value;
+            const otherActivityName = document.getElementById('otherActivityName').value;
+
+            if (selectedActivity === 'Others' && !otherActivityName) {
+                alert('Please enter the activity name.');
+                return;
+            }
+
+            if (timeSpent) {
+                const activity = selectedActivity === 'Others' ? otherActivityName : selectedActivity;
+                alert(`You have saved ${timeSpent} minutes for ${activity}!`);
+                // You can add functionality here to save the data to a database or local storage
+            } else {
+                alert('Please enter the time spent.');
+            }
+        }
+    </script>
+</body>
+</html>

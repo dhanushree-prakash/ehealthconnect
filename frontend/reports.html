@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous Reports</title>
+    <link rel="stylesheet" href="reports.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Previous Reports</h1>
+        <input type="text" id="search-bar" placeholder="Search reports..." onkeyup="searchReports()">
+        <div id="filter-options">
+            <label for="filter-date">Filter by Date:</label>
+            <input type="date" id="filter-date" onchange="filterByDate()">
+        </div>
+        <div id="reports-list">
+            <!-- Example reports -->
+            <div class="report-item">
+                <h4>Prescription: Blood Pressure Medication</h4>
+                <p>Date: January 5, 2024</p>
+                <p>Doctor: Dr. Sharma</p>
+                <p>Details: Medication for controlling blood pressure.</p>
+                <img src="image/blood-pressure.jpg" alt="Blood Pressure Medication" style="width: 100px; height: auto;">
+                <button onclick="downloadReport('image/blood-pressure.pdf')">Download</button>
+                <button onclick="viewReport('image/blood-pressure.pdf')">View</button>
+                <button onclick="updateReport('image/blood-pressure.pdf')">Update</button>
+                <button onclick="deleteReport(this, 'image/blood-pressure.pdf')">Delete</button>
+            </div>
+            <div class="report-item">
+                <h4>X-Ray: Chest Examination</h4>
+                <p>Date: February 10, 2024</p>
+                <p>Doctor: Dr. Gupta</p>
+                <p>Details: Chest X-ray to check for any abnormalities.</p>
+                <img src="image/chest-xray.jpg" alt="Chest X-Ray" style="width: 100px; height: auto;">
+                <button onclick="downloadReport('image/chest-xray.pdf')">Download</button>
+                <button onclick="viewReport('image/chest-xray.pdf')">View</button>
+                <button onclick="updateReport('image/chest-xray.pdf')">Update</button>
+                <button onclick="deleteReport(this, 'image/chest-xray.pdf')">Delete</button>
+            </div>
+            <div class="report-item">
+                <h4>Blood Test: CBC Results</h4>
+                <p>Date: March 12, 2024</p>
+                <p>Doctor: Dr. Patel</p>
+                <p>Details: Complete blood count results.</p>
+                <button onclick="downloadReport('image/cbc-results.pdf')">Download</button>
+                <button onclick="viewReport('image/cbc-results.pdf')">View</button>
+                <button onclick="updateReport('image/cbc-results.pdf')">Update</button>
+                <button onclick="deleteReport(this, 'image/cbc-results.pdf')">Delete</button>
+            </div>
+            <div class="report-item">
+                <h4>Ultrasound: Abdominal Scan</h4>
+                <p>Date: April 20, 2024</p>
+                <p>Doctor: Dr. Jain</p>
+                <p>Details: Abdominal ultrasound for abdominal pain.</p>
+                <img src="image/ultrasound.jpg" alt="Abdominal Ultrasound" style="width: 100px; height: auto;">
+                <button onclick="downloadReport('image/abdominal-ultrasound.pdf')">Download</button>
+                <button onclick="viewReport('image/abdominal-ultrasound.pdf')">View</button>
+                <button onclick="updateReport('image/abdominal-ultrasound.pdf')">Update</button>
+                <button onclick="deleteReport(this, 'image/abdominal-ultrasound.pdf')">Delete</button>
+            </div>
+            <div class="report-item">
+                <h4>Prescription: Diabetes Medication</h4>
+                <p>Date: May 15, 2024</p>
+                <p>Doctor: Dr. Verma</p>
+                <p>Details: Medication for managing diabetes.</p>
+                <button onclick="downloadReport('image/diabetes-medication.pdf')">Download</button>
+                <button onclick="viewReport('image/diabetes-medication.pdf')">View</button>
+                <button onclick="updateReport('image/diabetes-medication.pdf')">Update</button>
+                <button onclick="deleteReport(this, 'image/diabetes-medication.pdf')">Delete</button>
+            </div>
+            <div class="report-item">
+                <h4>X-Ray: Knee Examination</h4>
+                <p>Date: June 25, 2024</p>
+                <p>Doctor: Dr. Rao</p>
+                <p>Details: Knee X-ray to check for joint issues.</p>
+                <img src="image/knee-xray.jpg" alt="Knee X-Ray" style="width: 100px; height: auto;">
+                <button onclick="downloadReport('image/knee-xray.pdf')">Download</button>
+                <button onclick="viewReport('image/knee-xray.pdf')">View</button>
+                <button onclick="updateReport('image/knee-xray.pdf')">Update</button>
+                <button onclick="deleteReport(this, 'image/knee-xray.pdf')">Delete</button>
+            </div>
+            <div class="report-item">
+                <h4>Blood Test: Lipid Profile</h4>
+                <p>Date: July 30, 2024</p>
+                <p>Doctor: Dr. Sharma</p>
+                <p>Details: Lipid profile for cholesterol levels.</p>
+                <button onclick="downloadReport('image/lipid-profile.pdf')">Download</button>
+                <button onclick="viewReport('image/lipid-profile.pdf')">View</button>
+                <button onclick="updateReport('image/lipid-profile.pdf')">Update</button>
+                <button onclick="deleteReport(this, 'image/lipid-profile.pdf')">Delete</button>
+            </div>
+            <div class="report-item">
+                <h4>Ultrasound: Thyroid Scan</h4>
+                <p>Date: August 18, 2024</p>
+                <p>Doctor: Dr. Singh</p>
+                <p>Details: Thyroid scan for thyroid issues.</p>
+                <img src="image/thyroid.jpg" alt="Thyroid Ultrasound" style="width: 100px; height: auto;">
+                <button onclick="downloadReport('image/thyroid-scan.pdf')">Download</button>
+                <button onclick="viewReport('image/thyroid-scan.pdf')">View</button>
+                <button onclick="updateReport('image/thyroid-scan.pdf')">Update</button>
+                <button onclick="deleteReport(this, 'image/thyroid-scan.pdf')">Delete</button>
+            </div>
+            <div class="report-item">
+                <h4>Prescription: Pain Relief</h4>
+                <p>Date: September 5, 2024</p>
+                <p>Doctor: Dr. Rao</p>
+                <p>Details: Pain relief medication for joint pain.</p>
+                <button onclick="downloadReport('image/pain-relief.pdf')">Download</button>
+                <button onclick="viewReport('image/pain-relief.pdf')">View</button>
+                <button onclick="updateReport('image/pain-relief.pdf')">Update</button>
+                <button onclick="deleteReport(this, 'image/pain-relief.pdf')">Delete</button>
+            </div>
+            <div class="report-item">
+                <h4>X-Ray: Spine Examination</h4>
+                <p>Date: October 22, 2024</p>
+                <p>Doctor: Dr. Gupta</p>
+                <p>Details: Spine X-ray for back pain assessment.</p>
+                <img src="image/spine-xray.jpg" alt="Spine X-Ray" style="width: 100px; height: auto;">
+                <button onclick="downloadReport('image/spine-xray.pdf')">Download</button>
+                <button onclick="viewReport('image/spine-xray.pdf')">View</button>
+                <button onclick="updateReport('image/spine-xray.pdf')">Update</button>
+                <button onclick="deleteReport(this, 'image/spine-xray.pdf')">Delete</button>
+            </div>
+            <div class="report-item">
+                <h4>Blood Test: Vitamin D Levels</h4>
+                <p>Date: November 10, 2024</p>
+                <p>Doctor: Dr. Patel</p>
+                <p>Details: Vitamin D levels for deficiency check.</p>
+                <button onclick="downloadReport('image/vitamin-d.pdf')">Download</button>
+                <button onclick="viewReport('image/vitamin-d.pdf')">View</button>
+                <button onclick="updateReport('image/vitamin-d.pdf')">Update</button>
+                <button onclick="deleteReport(this, 'image/vitamin-d.pdf')">Delete</button>
+            </div>
+        </div>
+        <div class="pagination">
+            <button class="prev">Previous</button>
+            <span class="page-info">Page 1 of 3</span>
+            <button class="next">Next</button>
+        </div>
+    </div>
+    <script src="reports.js"></script> 
+</body>
+</html>

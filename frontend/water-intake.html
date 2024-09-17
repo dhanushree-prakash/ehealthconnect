@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Intake</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e0f7fa, #b9fbc0);
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #009688;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .back-btn {
+            background-color: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .back-btn i {
+            margin-right: 8px;
+        }
+
+        /* Section Styles */
+        .main-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .section::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(0, 150, 136, 0.15);
+            border-radius: 50%;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-10px);
+        }
+
+        .section:hover::before {
+            transform: scale(1.2);
+        }
+
+        .section h2 {
+            color: #009688;
+            margin-bottom: 20px;
+            font-weight: 600;
+            z-index: 2;
+            position: relative;
+        }
+
+        .charts-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .chart {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+        }
+
+        .update-btn {
+            background: linear-gradient(135deg, #00796b, #004d40);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease, transform 0.3s ease;
+            z-index: 2;
+            position: relative;
+        }
+
+        .update-btn i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .update-btn:hover {
+            background: linear-gradient(135deg, #004d40, #00332c);
+            transform: translateY(-5px);
+        }
+
+        /* Goals Section */
+        .goals-section {
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .goals-section h3 {
+            color: #00796b;
+            font-weight: 600;
+        }
+
+        .goals-section input {
+            width: 100px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .goals-section button {
+            background: linear-gradient(135deg, #00796b, #004d40);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .goals-section button:hover {
+            background: linear-gradient(135deg, #004d40, #00332c);
+            transform: translateY(-3px);
+        }
+
+        /* Popup Styles */
+        .dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .dialog-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .dialog-content h3 {
+            margin-top: 0;
+            color: #009688;
+        }
+
+        .dialog-content label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        .dialog-content input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .dialog-content .save-btn {
+            background: linear-gradient(135deg, #00796b, #004d40);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .dialog-content .save-btn:hover {
+            background: linear-gradient(135deg, #004d40, #00332c);
+            transform: translateY(-3px);
+        }
+
+        .dialog-content .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #009688;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 600px) {
+            .content {
+                padding: 15px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            .update-btn {
+                padding: 12px 25px;
+                font-size: 14px;
+            }
+
+            .charts-container {
+                flex-direction: column;
+            }
+
+            .chart {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <header>
+            <button class="back-btn" onclick="goBack()"><i class="fas fa-arrow-left"></i> Back</button>
+            <h1>Water Intake <i class="fas fa-tint"></i></h1>
+        </header>
+
+        <div class="main-sections">
+            <div class="section water-intake">
+                <h2>Water Intake <i class="fas fa-tint"></i></h2>
+                <div class="charts-container">
+                    <div class="water-progress chart">
+                        <canvas id="waterChart"></canvas>
+                    </div>
+                    <div class="daily-intake chart">
+                        <canvas id="dailyIntakeChart"></canvas>
+                    </div>
+                </div>
+                <div class="goals-section">
+                    <h3>Set Your Daily Goal</h3>
+                    <input type="number" id="goal-amount" placeholder="Goal (ml)" required>
+                    <button onclick="setGoal()">Set Goal</button>
+                </div>
+                <button class="update-btn" onclick="openDialog('water-dialog')"><i class="fas fa-sync-alt"></i> Update</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialog -->
+    <div id="water-dialog" class="dialog">
+        <div class="dialog-content">
+            <span class="close-btn" onclick="closeDialog('water-dialog')">&times;</span>
+            <h3>Update Water Intake</h3>
+            <form id="water-form">
+                <label for="water-amount">Amount (ml):</label>
+                <input type="number" id="water-amount" required>
+                <label for="water-time">Time:</label>
+                <input type="time" id="water-time" required>
+                <button type="button" class="save-btn" onclick="updateWaterIntake()">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Function to set default values in localStorage if none exist
+        function setDefaultValues() {
+            if (!localStorage.getItem('waterData')) {
+                localStorage.setItem('waterData', JSON.stringify({ consumed: 500, remaining: 1500 }));
+            }
+    
+            if (!localStorage.getItem('dailyIntakeData')) {
+                localStorage.setItem('dailyIntakeData', JSON.stringify({
+                    labels: ['2024-09-14', '2024-09-15', '2024-09-16'],
+                    data: [1200, 1500, 1300]
+                }));
+            }
+    
+            if (!localStorage.getItem('dailyGoal')) {
+                localStorage.setItem('dailyGoal', 2000);
+            }
+        }
+    
+        // Initialize charts
+        function initCharts() {
+            setDefaultValues(); // Ensure default values are set
+    
+            const waterData = JSON.parse(localStorage.getItem('waterData'));
+            const dailyIntakeData = JSON.parse(localStorage.getItem('dailyIntakeData'));
+    
+            // Water Intake Chart
+            new Chart('waterChart', {
+                type: 'doughnut',
+                data: {
+                    labels: ['Consumed', 'Remaining'],
+                    datasets: [{
+                        data: [waterData.consumed, waterData.remaining],
+                        backgroundColor: ['#00bcd4', '#e0e0e0'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    let label = tooltipItem.label || '';
+                                    if (label) {
+                                        label += ': ' + tooltipItem.raw + ' ml';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+    
+            // Daily Intake Chart
+            new Chart('dailyIntakeChart', {
+                type: 'line',
+                data: {
+                    labels: dailyIntakeData.labels.map(date => new Date(date).toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short' })),
+                    datasets: [{
+                        label: 'Daily Water Intake (ml)',
+                        data: dailyIntakeData.data,
+                        borderColor: '#009688',
+                        backgroundColor: 'rgba(0, 150, 136, 0.2)',
+                        fill: true,
+                        borderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Intake (ml)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return tooltipItem.dataset.label + ': ' + tooltipItem.raw + ' ml';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    
+        // Function to open the dialog
+        function openDialog(dialogId) {
+            document.getElementById(dialogId).style.display = 'flex';
+        }
+    
+        // Function to close the dialog
+        function closeDialog(dialogId) {
+            document.getElementById(dialogId).style.display = 'none';
+        }
+    
+        // Function to handle the back button
+        function goBack() {
+            window.history.back();
+        }
+    
+        // Function to update water intake
+        function updateWaterIntake() {
+            const amount = document.getElementById('water-amount').value;
+            const time = new Date(document.getElementById('water-time').value);
+    
+            if (amount && time) {
+                // Update the water chart
+                const waterChart = Chart.getChart('waterChart');
+                const waterData = JSON.parse(localStorage.getItem('waterData'));
+                const consumed = waterData.consumed + parseFloat(amount);
+                const remaining = 2000 - consumed;
+                waterChart.data.datasets[0].data = [consumed, remaining];
+                waterChart.update();
+    
+                // Update daily intake data
+                const dailyIntakeData = JSON.parse(localStorage.getItem('dailyIntakeData')) || {
+                    labels: [],
+                    data: []
+                };
+                const today = new Date().toISOString().split('T')[0];
+                if (!dailyIntakeData.labels.includes(today)) {
+                    dailyIntakeData.labels.push(today);
+                    dailyIntakeData.data.push(parseFloat(amount));
+                } else {
+                    const index = dailyIntakeData.labels.indexOf(today);
+                    dailyIntakeData.data[index] += parseFloat(amount);
+                }
+    
+                // Save daily intake data
+                localStorage.setItem('dailyIntakeData', JSON.stringify(dailyIntakeData));
+    
+                // Update daily intake chart
+                const dailyIntakeChart = Chart.getChart('dailyIntakeChart');
+                dailyIntakeChart.data.labels = dailyIntakeData.labels.map(date => new Date(date).toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short' }));
+                dailyIntakeChart.data.datasets[0].data = dailyIntakeData.data;
+                dailyIntakeChart.update();
+    
+                // Save the data to localStorage
+                localStorage.setItem('waterData', JSON.stringify({ consumed, remaining }));
+    
+                // Clear the form fields
+                document.getElementById('water-form').reset();
+                closeDialog('water-dialog');
+    
+                // Set up notification
+                const now = new Date();
+                const timeDiff = time - now;
+                if (timeDiff > 0) {
+                    setTimeout(() => {
+                        if (Notification.permission === 'granted') {
+                            new Notification('Water Intake Reminder', {
+                                body: `Time to drink ${amount} ml of water!`,
+                                icon: 'https://via.placeholder.com/50'
+                            });
+                        }
+                    }, timeDiff);
+                }
+            } else {
+                alert('Please fill in all fields.');
+            }
+        }
+    
+        // Function to set daily goal
+        function setGoal() {
+            const goalAmount = parseFloat(document.getElementById('goal-amount').value);
+            if (goalAmount) {
+                localStorage.setItem('dailyGoal', goalAmount);
+                alert('Daily goal set to ' + goalAmount + ' ml.');
+            } else {
+                alert('Please enter a valid goal amount.');
+            }
+        }
+    
+        // Initialize charts on page load
+        window.onload = initCharts;
+    </script>
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>

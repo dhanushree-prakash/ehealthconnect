@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Health Connect Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-container">
+            <div class="login-form">
+                <h2>Login</h2>
+                <p>Welcome to E-Health Connect</p>
+                <p>Let's get started!</p>
+                <form id="loginForm" action="#">
+                    <div class="input-group">
+                        <input type="text" id="username" placeholder="Username" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="login-btn">Login Now</button>
+                    <p class="divider">Or login with</p>
+                    <div class="social-login">
+                        <button type="button" class="social-btn google">Google</button>
+                        <button type="button" class="social-btn facebook">Facebook</button>
+                    </div>
+                </form>
+            </div>
+            <div class="login-image">
+                <img src="image/login.png" alt="Login Image" />
+            </div>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

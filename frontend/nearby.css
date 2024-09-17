@@ -1,0 +1,210 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #e0f7fa 0%, #f1f8e9 100%); /* Mild gradient background */
+}
+
+/* Header Styles */
+header {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 20px 30px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 5px solid #0056b3;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+header h3 {
+    margin: 5px 0;
+    font-size: 1.2em;
+}
+
+.close-btn {
+    position: absolute;
+    right: 30px;
+    top: 20px;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 28px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #ffdddd;
+}
+
+/* Main Section Styles */
+main {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Filter Section Styles */
+.filter-section {
+    padding: 25px;
+    background: #ffffff;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-section h2 {
+    margin-top: 0;
+    font-size: 28px;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.filter-section h2 i {
+    margin-right: 10px;
+}
+
+.filter-section label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 18px;
+    color: #333;
+}
+
+.filter-section input[type="checkbox"] {
+    margin-right: 12px;
+}
+
+.filter-section button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.filter-section button:hover {
+    background-color: #0056b3;
+}
+
+/* Results Section Styles */
+.results-section {
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.results-section h2 {
+    margin-top: 0;
+    font-size: 28px;
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.results-section h2 i {
+    margin-right: 10px;
+}
+
+/* Results Item Styles */
+.results-item {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    transition: background 0.3s ease, transform 0.3s ease;
+    border-radius: 8px;
+    position: relative; /* Required for status indicator positioning */
+}
+
+.results-item:last-child {
+    border-bottom: none;
+}
+
+.results-item:hover {
+    background: #f9f9f9;
+    transform: translateY(-2px);
+}
+
+.results-item img {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    margin-right: 20px;
+    object-fit: cover;
+}
+
+.results-item .info {
+    flex: 1;
+}
+
+.results-item h3 {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.results-item p {
+    margin: 0;
+    color: #555;
+    font-size: 16px;
+}
+
+/* Status Indicator */
+.status-indicator {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 12px; /* Smaller font size */
+    font-weight: bold;
+}
+
+/* Status Colors */
+.status-indicator.available {
+    background-color: #28a745; /* Green for available */
+}
+
+.status-indicator.unavailable {
+    background-color: #dc3545; /* Red for unavailable */
+}
+
+.status-indicator.urgent {
+    background-color: #ffc107; /* Yellow for urgent */
+}
+
+.results-item .view-btn {
+    background-color: #28a745;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.results-item .view-btn:hover {
+    background-color: #218838;
+}
+
+.results-item .view-btn i {
+    margin-right: 8px;
+}
